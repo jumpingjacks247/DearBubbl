@@ -8,8 +8,31 @@ const stepText = document.querySelector("#stepText");
 const completeStepButton = document.querySelector("#completeStepButton");
 const helpCard = document.querySelector("#helpCard");
 const privacyHint = document.querySelector("#privacyHint");
+const dailyGoalList = document.querySelector("#dailyGoalList");
+const goalCount = document.querySelector("#goalCount");
 
 let lastStepId = null;
+
+function renderDailyGoals() {
+  const goals = DearBubblStorage.getDailyGoals();
+  const completedCount = goals.filter((goal) => goal.completed).length;
+  goalCount.textContent = `${completedCount} / ${goals.length} done`;
+  dailyGoalList.innerHTML = goals.map((goal) => `
+    <label class="daily-goal ${goal.completed ? "is-complete" : ""}">
+      <input type="checkbox" data-goal-id="${goal.id}" ${goal.completed ? "checked" : ""} />
+      <span class="goal-box" aria-hidden="true">✓</span>
+      <span class="goal-label">${goal.label}</span>
+      ${goal.completed ? '<span class="goal-thumb" aria-label="Goal complete">👍</span>' : ""}
+    </label>
+  `).join("");
+
+  dailyGoalList.querySelectorAll("input[data-goal-id]").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      DearBubblStorage.toggleDailyGoal(checkbox.dataset.goalId, checkbox.checked);
+      renderDailyGoals();
+    });
+  });
+}
 
 function addMessage(kind, text) {
   const row = document.createElement("div");
@@ -55,6 +78,8 @@ document.querySelectorAll(".starter-card").forEach((button) => {
     privacyHint.textContent = "Add only what feels okay to share ♡";
   });
 });
+
+renderDailyGoals();
 
 messageInput.addEventListener("input", () => {
   privacyHint.textContent = containsPrivateDetail(messageInput.value)

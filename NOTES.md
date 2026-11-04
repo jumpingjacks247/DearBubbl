@@ -14,6 +14,7 @@ The OpenAI key is read only from `.env`. The model is `gpt-5.6-luna`. If the AI 
 
 - Version 1 focuses on one complete session: pick a doorway, write what feels okay, send once, receive Bubbl’s supportive reply, and get one optional small step toward talking with another person.
 - Safety reminders are visible before and during chat. The app blocks common private details, has a high-risk support message with 911/988, never pressures the student to keep sharing, and disables Send while it shows “Thinking…”.
+- The Daily Social Goal tracker shows three checklist tasks for today and gives a thumbs-up when each one is completed.
 - Conversation entries and sample next steps save in the browser through `public/storage.js` so the future database change has one small home.
 - Saves on this computer only for now.
 - Verified locally: the starter flow reaches a real OpenAI reply, shows `Thinking…` while waiting, saves the optional step, and warns before a sample address is sent.
