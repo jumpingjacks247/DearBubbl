@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DearBubbl — a little room to be heard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="DearBubbl home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>Dear<span class="brand-accent">Bubbl</span></span>
+        </a>
+        <div class="topbar-note"><span class="status-dot"></span> a private-feeling practice space</div>
+      </header>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">one gentle step at a time</p>
+          <h1>A little room<br />to be <em>heard.</em></h1>
+          <p class="hero-text">Bubbl helps you put feelings into words, then try one tiny, totally optional step toward a real person.</p>
+          <div class="difference-pill"><span>✦</span><strong>Different by design</strong><span>no pressure · no judgment · no oversharing</span></div>
+        </div>
+        <div class="orb-wrap" aria-hidden="true">
+          <div class="orb orb-back"></div>
+          <div class="orb orb-main"><div class="orb-face"><span class="eye left"></span><span class="eye right"></span><span class="smile"></span></div></div>
+          <span class="spark spark-one">✦</span><span class="spark spark-two">✧</span><span class="spark spark-three">·</span>
+        </div>
+      </section>
+
+      <section class="safety-strip" aria-label="Safety reminder">
+        <span class="safety-icon">♡</span>
+        <div><strong>Your comfort comes first.</strong> Please skip names, addresses, school names, passwords, and other private details. You can leave anytime.</div>
+        <span class="local-note">Saves on this computer only for now</span>
+      </section>
+
+      <section class="chat-card" aria-label="DearBubbl chat">
+        <div class="chat-heading">
+          <div class="bubbl-avatar">b<span>·</span></div>
+          <div><h2>Bubbl</h2><p>your tiny cheerleader for brave conversations</p></div>
+          <span class="online-badge">here with you</span>
+        </div>
+
+        <div class="chat-log" id="chatLog" aria-live="polite">
+          <div class="message-row bubbl-row">
+            <div class="message-avatar">b</div>
+            <div class="message-bubble bubbl-bubble"><p>Hello! I'm Bubbl, here to help you and those around you with expressing feelings and social anxiety. What are we talking about today? :)</p><span class="message-time">just now</span></div>
+          </div>
+        </div>
+
+        <div class="starter-area" id="starterArea">
+          <p class="starter-label">Pick a doorway, or write your own:</p>
+          <div class="starter-grid">
+            <button class="starter-card" data-starter="My day was..."><span class="starter-emoji peach">☀</span><span><strong>Talk about your day?</strong><small>the good, the weird, or the blah</small></span><span class="arrow">↗</span></button>
+            <button class="starter-card" data-starter="At home, I..."><span class="starter-emoji lavender">⌂</span><span><strong>What happened at home?</strong><small>only what you feel okay sharing</small></span><span class="arrow">↗</span></button>
+            <button class="starter-card" data-starter="Right now, I feel..."><span class="starter-emoji mint">☁</span><span><strong>Everything okay? :(</strong><small>you can start with one word</small></span><span class="arrow">↗</span></button>
+          </div>
+        </div>
+
+        <form class="composer" id="chatForm">
+          <label class="sr-only" for="messageInput">Your message</label>
+          <textarea id="messageInput" rows="2" maxlength="1200" placeholder="Write only what feels okay to share..."></textarea>
+          <div class="composer-footer"><span id="privacyHint">No private details, please ♡</span><button class="send-button" id="sendButton" type="submit"><span>Send to Bubbl</span><span class="send-arrow">→</span></button></div>
+        </form>
+      </section>
+
+      <section class="next-step-card" id="nextStepCard" hidden>
+        <div class="step-icon">✦</div>
+        <div class="step-copy"><p class="eyebrow">your one tiny next step</p><h2>Want to stretch your comfort zone — just a little?</h2><p id="stepText"></p></div>
+        <button id="completeStepButton" class="soft-button" type="button">I’ll try this <span>→</span></button>
+      </section>
+
+      <section class="help-card" id="helpCard" hidden>
+        <div class="help-icon">♡</div><div><strong>You deserve real support, too.</strong><p>If you may be in immediate danger, call 911. In the U.S., call or text <strong>988</strong> for the Suicide & Crisis Lifeline.</p></div>
+      </section>
+
+      <footer><span>DearBubbl · Version 1</span><span>made for kindness, safety, and small brave steps</span></footer>
+    </main>
+    <script src="/storage.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
