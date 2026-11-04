@@ -6,6 +6,8 @@
 2. Start the app with `npm start`.
 3. Open `http://127.0.0.1:3000` in a browser.
 
+Keep the `npm start` server running while using the app; if the page ever says it cannot connect, run that command again.
+
 The OpenAI key is read only from `.env`. The model is `gpt-5.6-luna`. If the AI cannot answer, the app tells you to check `.env` and the internet connection. The key is never sent to the page.
 
 ## What’s done
