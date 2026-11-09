@@ -6,7 +6,7 @@
     <title>DearBubbl — a little room to be heard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -17,7 +17,7 @@
           <span>Dear<span class="brand-accent">Bubbl</span></span>
         </a>
         <div class="topbar-actions">
-          <a class="gallery-link" href="#quoteCollectionTitle">Gallery <span id="topCollectionCount">0 / 100</span></a>
+          <button class="gallery-link" id="galleryOpenButton" type="button">Gallery <span id="topCollectionCount">0 / 100</span></button>
           <div class="topbar-note"><span class="status-dot"></span> a private-feeling practice space</div>
         </div>
       </header>
@@ -50,20 +50,6 @@
           <span class="goal-count" id="goalCount">0 / 3 done</span>
         </div>
         <div class="daily-goal-list" id="dailyGoalList"></div>
-      </section>
-
-      <section class="quote-collection-card" aria-labelledby="quoteCollectionTitle">
-        <div class="quote-collection-heading">
-          <div>
-            <p class="eyebrow">your blind-box collection</p>
-            <h2 id="quoteCollectionTitle">Sticky Notes</h2>
-            <p>Each completed goal reveals one random note. No repeats until you find them all.</p>
-          </div>
-          <span class="collection-count" id="collectionCount">0 / 100 found</span>
-        </div>
-        <div class="quote-collection-list" id="quoteCollectionList">
-          <p class="collection-empty">Complete a Daily Social Goal to open your first note.</p>
-        </div>
       </section>
 
       <section class="chat-card" aria-label="DearBubbl chat">
@@ -108,6 +94,23 @@
 
       <footer><span>DearBubbl · Version 1</span><span>made for kindness, safety, and small brave steps</span></footer>
     </main>
+    <div class="gallery-modal" id="galleryModal" hidden>
+      <div class="gallery-backdrop" id="galleryBackdrop"></div>
+      <section class="quote-collection-card gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="quoteCollectionTitle">
+        <button class="gallery-close" id="galleryClose" type="button" aria-label="Close gallery">×</button>
+        <div class="quote-collection-heading">
+          <div>
+            <p class="eyebrow">your blind-box collection</p>
+            <h2 id="quoteCollectionTitle">Sticky Notes</h2>
+            <p>Each completed goal reveals one random note. No repeats until you find them all.</p>
+          </div>
+          <span class="collection-count" id="collectionCount">0 / 100 found</span>
+        </div>
+        <div class="quote-collection-list" id="quoteCollectionList">
+          <p class="collection-empty">Complete a Daily Social Goal to open your first note.</p>
+        </div>
+      </section>
+    </div>
     <div class="quote-flight" id="quoteFlight" hidden aria-live="polite">
       <div class="flight-dots" aria-hidden="true"></div>
       <svg class="paper-plane" viewBox="0 0 90 60" aria-hidden="true">

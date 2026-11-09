@@ -18,7 +18,7 @@ The OpenAI key is read only from `.env`. The model is `gpt-5.6-luna`. If the AI 
 - The header and hero now use the supplied DearBubbl logo, and the promotion line says “Always a place to land.”
 - The page now uses a pale blue and white cloud background, dark navy text, and varied pastel button colors.
 - The large hero logo now sits on a white circle so it stays clear over the cloud background.
-- Completing a daily goal now opens a random blind-box sticky note: 25 Common yellow notes, 25 Rare purple notes, 25 Super Rare pink notes, and 25 Legendary blue notes. Found notes stay in the browser collection without repeats.
+- Completing a daily goal now opens a small square blind-box sticky note with a paper-plane trail and light animation: 25 Common yellow notes, 25 Rare purple notes, 25 Super Rare pink notes, and 25 Legendary blue notes. Found notes stay in the browser collection without repeats. The quote text uses a handwriting style, and the top Gallery button opens the organized collection in its own popup.
 - Conversation entries and sample next steps save in the browser through `public/storage.js` so the future database change has one small home.
 - Saves on this computer only for now.
 - Verified locally: the starter flow reaches a real OpenAI reply, shows `Thinking…` while waiting, saves the optional step, and warns before a sample address is sent.

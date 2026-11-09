@@ -17,6 +17,10 @@ const quoteNoteClose = document.querySelector("#quoteNoteClose");
 const quoteCollectionList = document.querySelector("#quoteCollectionList");
 const collectionCount = document.querySelector("#collectionCount");
 const topCollectionCount = document.querySelector("#topCollectionCount");
+const galleryOpenButton = document.querySelector("#galleryOpenButton");
+const galleryModal = document.querySelector("#galleryModal");
+const galleryClose = document.querySelector("#galleryClose");
+const galleryBackdrop = document.querySelector("#galleryBackdrop");
 
 let lastStepId = null;
 let quoteOpenTimer;
@@ -41,6 +45,18 @@ function showQuote(blindBox) {
   quoteFlight.classList.add("is-flying");
   quoteOpenTimer = setTimeout(() => quoteFlight.classList.add("is-open"), 780);
   quoteHideTimer = setTimeout(closeQuoteNote, 7000);
+}
+
+function openGallery() {
+  galleryModal.hidden = false;
+  document.body.classList.add("gallery-open");
+  galleryClose.focus();
+}
+
+function closeGallery() {
+  galleryModal.hidden = true;
+  document.body.classList.remove("gallery-open");
+  galleryOpenButton.focus();
 }
 
 function renderQuoteCollection() {
@@ -144,6 +160,13 @@ document.querySelectorAll(".starter-card").forEach((button) => {
 renderDailyGoals();
 renderQuoteCollection();
 quoteNoteClose.addEventListener("click", closeQuoteNote);
+galleryOpenButton.addEventListener("click", openGallery);
+galleryClose.addEventListener("click", closeGallery);
+galleryBackdrop.addEventListener("click", closeGallery);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !galleryModal.hidden) closeGallery();
+});
 
 messageInput.addEventListener("input", () => {
   privacyHint.textContent = containsPrivateDetail(messageInput.value)
