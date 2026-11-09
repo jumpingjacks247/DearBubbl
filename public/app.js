@@ -10,8 +10,27 @@ const helpCard = document.querySelector("#helpCard");
 const privacyHint = document.querySelector("#privacyHint");
 const dailyGoalList = document.querySelector("#dailyGoalList");
 const goalCount = document.querySelector("#goalCount");
+const quoteFlight = document.querySelector("#quoteFlight");
+const quoteText = document.querySelector("#quoteText");
 
 let lastStepId = null;
+let quoteOpenTimer;
+let quoteHideTimer;
+
+function showQuote(quote) {
+  clearTimeout(quoteOpenTimer);
+  clearTimeout(quoteHideTimer);
+  quoteText.textContent = quote;
+  quoteFlight.hidden = false;
+  quoteFlight.classList.remove("is-flying", "is-open");
+  void quoteFlight.offsetWidth;
+  quoteFlight.classList.add("is-flying");
+  quoteOpenTimer = setTimeout(() => quoteFlight.classList.add("is-open"), 780);
+  quoteHideTimer = setTimeout(() => {
+    quoteFlight.classList.remove("is-flying", "is-open");
+    quoteFlight.hidden = true;
+  }, 7000);
+}
 
 function renderDailyGoals() {
   const goals = DearBubblStorage.getDailyGoals();
@@ -28,8 +47,10 @@ function renderDailyGoals() {
 
   dailyGoalList.querySelectorAll("input[data-goal-id]").forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
-      DearBubblStorage.toggleDailyGoal(checkbox.dataset.goalId, checkbox.checked);
+      const completed = checkbox.checked;
+      DearBubblStorage.toggleDailyGoal(checkbox.dataset.goalId, completed);
       renderDailyGoals();
+      if (completed) showQuote(DearBubblStorage.getNextQuote());
     });
   });
 }
