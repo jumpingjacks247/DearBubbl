@@ -12,17 +12,22 @@ const dailyGoalList = document.querySelector("#dailyGoalList");
 const goalCount = document.querySelector("#goalCount");
 const quoteFlight = document.querySelector("#quoteFlight");
 const quoteText = document.querySelector("#quoteText");
+const quoteNoteLabel = document.querySelector("#quoteNoteLabel");
+const quoteCollectionList = document.querySelector("#quoteCollectionList");
+const collectionCount = document.querySelector("#collectionCount");
 
 let lastStepId = null;
 let quoteOpenTimer;
 let quoteHideTimer;
 
-function showQuote(quote) {
+function showQuote(blindBox) {
   clearTimeout(quoteOpenTimer);
   clearTimeout(quoteHideTimer);
-  quoteText.textContent = quote;
+  quoteText.textContent = blindBox.text;
+  quoteNoteLabel.textContent = `${blindBox.rarityLabel} sticky note`;
   quoteFlight.hidden = false;
-  quoteFlight.classList.remove("is-flying", "is-open");
+  quoteFlight.classList.remove("is-flying", "is-open", "rarity-common", "rarity-rare", "rarity-super-rare", "rarity-legendary");
+  quoteFlight.classList.add(`rarity-${blindBox.rarity}`);
   void quoteFlight.offsetWidth;
   quoteFlight.classList.add("is-flying");
   quoteOpenTimer = setTimeout(() => quoteFlight.classList.add("is-open"), 780);
@@ -30,6 +35,19 @@ function showQuote(quote) {
     quoteFlight.classList.remove("is-flying", "is-open");
     quoteFlight.hidden = true;
   }, 7000);
+}
+
+function renderQuoteCollection() {
+  const collection = DearBubblStorage.getQuoteCollection();
+  collectionCount.textContent = `${collection.length} / 100 found`;
+  quoteCollectionList.innerHTML = collection.length
+    ? collection.map((quote) => `
+      <article class="collection-note rarity-${quote.rarity}">
+        <span class="collection-rarity">${quote.rarityLabel}</span>
+        <p>${quote.text}</p>
+      </article>
+    `).join("")
+    : '<p class="collection-empty">Complete a Daily Social Goal to open your first note.</p>';
 }
 
 function renderDailyGoals() {
@@ -50,7 +68,13 @@ function renderDailyGoals() {
       const completed = checkbox.checked;
       DearBubblStorage.toggleDailyGoal(checkbox.dataset.goalId, completed);
       renderDailyGoals();
-      if (completed) showQuote(DearBubblStorage.getNextQuote());
+      if (completed) {
+        const blindBox = DearBubblStorage.drawBlindBoxQuote();
+        if (blindBox) {
+          showQuote(blindBox);
+          renderQuoteCollection();
+        }
+      }
     });
   });
 }
@@ -101,6 +125,7 @@ document.querySelectorAll(".starter-card").forEach((button) => {
 });
 
 renderDailyGoals();
+renderQuoteCollection();
 
 messageInput.addEventListener("input", () => {
   privacyHint.textContent = containsPrivateDetail(messageInput.value)

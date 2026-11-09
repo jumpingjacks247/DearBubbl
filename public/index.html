@@ -49,6 +49,20 @@
         <div class="daily-goal-list" id="dailyGoalList"></div>
       </section>
 
+      <section class="quote-collection-card" aria-labelledby="quoteCollectionTitle">
+        <div class="quote-collection-heading">
+          <div>
+            <p class="eyebrow">your blind-box collection</p>
+            <h2 id="quoteCollectionTitle">Sticky Notes</h2>
+            <p>Each completed goal reveals one random note. No repeats until you find them all.</p>
+          </div>
+          <span class="collection-count" id="collectionCount">0 / 100 found</span>
+        </div>
+        <div class="quote-collection-list" id="quoteCollectionList">
+          <p class="collection-empty">Complete a Daily Social Goal to open your first note.</p>
+        </div>
+      </section>
+
       <section class="chat-card" aria-label="DearBubbl chat">
         <div class="chat-heading">
           <div class="bubbl-avatar">b<span>·</span></div>
@@ -98,7 +112,7 @@
         <path d="m25 30 59 0-43 9Z" fill="#dbeeff" stroke="#5d83aa" stroke-width="2" stroke-linejoin="round" />
       </svg>
       <aside class="quote-note" id="quoteNote">
-        <span class="quote-note-label">A little note for you</span>
+        <span class="quote-note-label" id="quoteNoteLabel">A little note for you</span>
         <p id="quoteText"></p>
       </aside>
     </div>

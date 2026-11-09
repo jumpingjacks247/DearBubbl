@@ -109,12 +109,19 @@ const quotes = [
   "One life. One chance. Make it extraordinary.",
 ];
 
+const rarityTiers = [
+  { key: "common", label: "Common" },
+  { key: "rare", label: "Rare" },
+  { key: "super-rare", label: "Super Rare" },
+  { key: "legendary", label: "Legendary" },
+];
+
 const sampleState = {
   version: 1,
   conversations: [],
   completedSteps: [],
   dailyGoals: { date: "", completed: [] },
-  quoteIndex: 0,
+  collectedQuotes: [],
   sampleSteps: [
     { id: "wave", label: "Wave hi to someone you do not usually talk to." },
     { id: "sit", label: "Sit near someone and ask one easy question." },
@@ -174,13 +181,27 @@ function toggleDailyGoal(goalId, completed) {
   saveState(state);
 }
 
-function getNextQuote() {
-  const state = readState();
-  const index = Number.isInteger(state.quoteIndex) ? state.quoteIndex : 0;
-  const quote = quotes[index % quotes.length];
-  state.quoteIndex = (index + 1) % quotes.length;
-  saveState(state);
-  return quote;
+function quoteWithRarity(index) {
+  const rarity = rarityTiers[Math.floor(index / 25)] || rarityTiers[0];
+  return { id: index, text: quotes[index], rarity: rarity.key, rarityLabel: rarity.label };
 }
 
-window.DearBubblStorage = { readState, addConversation, completeStep, getDailyGoals, toggleDailyGoal, getNextQuote };
+function drawBlindBoxQuote() {
+  const state = readState();
+  const collected = Array.isArray(state.collectedQuotes) ? state.collectedQuotes : [];
+  const collectedSet = new Set(collected);
+  const available = quotes.map((_quote, index) => index).filter((index) => !collectedSet.has(index));
+  if (!available.length) return null;
+  const index = available[Math.floor(Math.random() * available.length)];
+  state.collectedQuotes = [...collected, index];
+  saveState(state);
+  return quoteWithRarity(index);
+}
+
+function getQuoteCollection() {
+  const state = readState();
+  const collected = Array.isArray(state.collectedQuotes) ? state.collectedQuotes : [];
+  return collected.map(quoteWithRarity);
+}
+
+window.DearBubblStorage = { readState, addConversation, completeStep, getDailyGoals, toggleDailyGoal, drawBlindBoxQuote, getQuoteCollection };
