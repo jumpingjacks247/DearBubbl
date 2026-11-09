@@ -16,7 +16,10 @@
           <img class="brand-logo" src="/assets/dearbubbl-logo.png" alt="DearBubbl logo" />
           <span>Dear<span class="brand-accent">Bubbl</span></span>
         </a>
-        <div class="topbar-note"><span class="status-dot"></span> a private-feeling practice space</div>
+        <div class="topbar-actions">
+          <a class="gallery-link" href="#quoteCollectionTitle">Gallery <span id="topCollectionCount">0 / 100</span></a>
+          <div class="topbar-note"><span class="status-dot"></span> a private-feeling practice space</div>
+        </div>
       </header>
 
       <section class="hero-grid">
@@ -111,9 +114,11 @@
         <path d="M5 7 84 30 5 53l20-23Z" fill="#fff" stroke="#5d83aa" stroke-width="2" stroke-linejoin="round" />
         <path d="m25 30 59 0-43 9Z" fill="#dbeeff" stroke="#5d83aa" stroke-width="2" stroke-linejoin="round" />
       </svg>
+      <div class="quote-light" aria-hidden="true"></div>
       <aside class="quote-note" id="quoteNote">
         <span class="quote-note-label" id="quoteNoteLabel">A little note for you</span>
         <p id="quoteText"></p>
+        <button class="quote-note-close" id="quoteNoteClose" type="button" aria-label="Close sticky note">×</button>
       </aside>
     </div>
     <script src="/storage.js"></script>

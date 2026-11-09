@@ -13,12 +13,21 @@ const goalCount = document.querySelector("#goalCount");
 const quoteFlight = document.querySelector("#quoteFlight");
 const quoteText = document.querySelector("#quoteText");
 const quoteNoteLabel = document.querySelector("#quoteNoteLabel");
+const quoteNoteClose = document.querySelector("#quoteNoteClose");
 const quoteCollectionList = document.querySelector("#quoteCollectionList");
 const collectionCount = document.querySelector("#collectionCount");
+const topCollectionCount = document.querySelector("#topCollectionCount");
 
 let lastStepId = null;
 let quoteOpenTimer;
 let quoteHideTimer;
+
+function closeQuoteNote() {
+  clearTimeout(quoteOpenTimer);
+  clearTimeout(quoteHideTimer);
+  quoteFlight.classList.remove("is-flying", "is-open", "rarity-common", "rarity-rare", "rarity-super-rare", "rarity-legendary");
+  quoteFlight.hidden = true;
+}
 
 function showQuote(blindBox) {
   clearTimeout(quoteOpenTimer);
@@ -31,23 +40,31 @@ function showQuote(blindBox) {
   void quoteFlight.offsetWidth;
   quoteFlight.classList.add("is-flying");
   quoteOpenTimer = setTimeout(() => quoteFlight.classList.add("is-open"), 780);
-  quoteHideTimer = setTimeout(() => {
-    quoteFlight.classList.remove("is-flying", "is-open");
-    quoteFlight.hidden = true;
-  }, 7000);
+  quoteHideTimer = setTimeout(closeQuoteNote, 7000);
 }
 
 function renderQuoteCollection() {
   const collection = DearBubblStorage.getQuoteCollection();
   collectionCount.textContent = `${collection.length} / 100 found`;
-  quoteCollectionList.innerHTML = collection.length
-    ? collection.map((quote) => `
-      <article class="collection-note rarity-${quote.rarity}">
-        <span class="collection-rarity">${quote.rarityLabel}</span>
-        <p>${quote.text}</p>
-      </article>
-    `).join("")
-    : '<p class="collection-empty">Complete a Daily Social Goal to open your first note.</p>';
+  topCollectionCount.textContent = `${collection.length} / 100`;
+  const rarityGroups = [
+    { key: "common", label: "Common", color: "yellow" },
+    { key: "rare", label: "Rare", color: "purple" },
+    { key: "super-rare", label: "Super Rare", color: "pink" },
+    { key: "legendary", label: "Legendary", color: "blue" },
+  ];
+  quoteCollectionList.innerHTML = rarityGroups.map((group) => {
+    const notes = collection.filter((quote) => quote.rarity === group.key);
+    return `<section class="collection-group rarity-${group.key}">
+      <div class="collection-group-heading"><span>${group.label}</span><small>${notes.length} / 25 · ${group.color}</small></div>
+      <div class="collection-group-grid">${notes.length ? notes.map((quote) => `
+        <article class="collection-note rarity-${quote.rarity}">
+          <span class="collection-rarity">${quote.rarityLabel}</span>
+          <p>${quote.text}</p>
+        </article>
+      `).join("") : '<p class="collection-empty">No notes yet</p>'}</div>
+    </section>`;
+  }).join("");
 }
 
 function renderDailyGoals() {
@@ -126,6 +143,7 @@ document.querySelectorAll(".starter-card").forEach((button) => {
 
 renderDailyGoals();
 renderQuoteCollection();
+quoteNoteClose.addEventListener("click", closeQuoteNote);
 
 messageInput.addEventListener("input", () => {
   privacyHint.textContent = containsPrivateDetail(messageInput.value)
