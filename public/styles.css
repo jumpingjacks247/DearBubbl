@@ -74,8 +74,8 @@ body.gallery-open { overflow: hidden; }
 .gallery-dialog .quote-collection-list { max-height: 63vh; overflow-y: auto; }
 .gallery-close { position: absolute; top: 13px; right: 16px; z-index: 2; width: 32px; height: 32px; border: 0; border-radius: 50%; background: #eaf4fd; color: var(--ink); font-size: 1.35rem; line-height: 1; cursor: pointer; }
 .gallery-close:hover { background: #dbeeff; }
-.collection-group-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.collection-note { min-height: 0; aspect-ratio: 1 / 1; padding: 13px 12px; overflow: hidden; }
+.collection-group-grid { grid-template-columns: repeat(auto-fill, 108px); justify-content: start; gap: 12px; }
+.collection-note { width: 108px; height: 108px; min-height: 0; aspect-ratio: auto; padding: 11px 10px; overflow: hidden; }
 .collection-note p { font-family: "Caveat", "Segoe Print", "Bradley Hand", cursive; font-size: .98rem; line-height: 1.08; margin-top: 9px; overflow: hidden; }
 .quote-note { width: min(280px, calc(100vw - 40px)); min-height: 0; aspect-ratio: 1 / 1; }
 .quote-note p { font-family: "Caveat", "Segoe Print", "Bradley Hand", cursive; font-size: 1.55rem; line-height: 1.15; letter-spacing: 0; }
@@ -84,5 +84,6 @@ body.gallery-open { overflow: hidden; }
   .gallery-dialog { max-height: 91vh; padding: 18px; }
   .gallery-dialog .quote-collection-heading { padding-right: 28px; }
   .gallery-dialog .quote-collection-list { max-height: 68vh; }
-  .collection-group-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .collection-group-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .collection-note { width: auto; height: auto; }
 }
