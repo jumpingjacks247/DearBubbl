@@ -50,6 +50,10 @@ app.get("*", (_request, response) => {
   response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(port, "127.0.0.1", () => {
-  console.log(`DearBubbl is running at http://127.0.0.1:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, "127.0.0.1", () => {
+    console.log(`DearBubbl is running at http://127.0.0.1:${port}`);
+  });
+}
+
+module.exports = app;

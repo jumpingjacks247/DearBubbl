@@ -10,6 +10,13 @@ Keep the `npm start` server running while using the app; if the page ever says i
 
 The OpenAI key is read only from `.env`. The model is `gpt-5.6-luna`. If the AI cannot answer, the app tells you to check `.env` and the internet connection. The key is never sent to the page.
 
+## Vercel setup
+
+- Vercel can detect this Express app automatically from `server.js`; the files in `public/` are the page and assets. No build command or database is needed for Version 1.
+- In the Vercel project’s Environment Variables settings, add the secret value under the name `OPENAI_API_KEY` for Production. Add it to Preview too if you want preview links to answer. Redeploy after adding or changing it.
+- The long `sk-...` text supplied for deployment is the secret value, not a valid Vercel variable name. Vercel variable names can use letters, numbers, and underscores, so the code uses `OPENAI_API_KEY` and never contains the secret.
+- Keep `.env` and `.env*` ignored. Browser saving still works locally and online; there is no database yet.
+
 ## What’s done
 
 - Version 1 focuses on one complete session: pick a doorway, write what feels okay, send once, receive Bubbl’s supportive reply, and get one optional small step toward talking with another person.
