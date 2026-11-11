@@ -5,10 +5,10 @@ const OpenAI = require("openai");
 const brief = fs.readFileSync(path.join(__dirname, "BRIEF.md"), "utf8");
 const model = "gpt-5.6-luna";
 const voiceStyles = {
-  friendly: "Sound warm, kind, and welcoming.",
-  casual: "Sound easygoing and conversational, like a relaxed supportive chat.",
-  empathetic: "Sound especially gentle, patient, and understanding of the user's feelings.",
-  upbeat: "Sound bright, hopeful, and encouraging without dismissing the user's feelings.",
+  friendly: "Use a warm, steady, kind tone. Acknowledge what the user shared, then offer gentle support. Do not sound overly excited.",
+  casual: "Use relaxed everyday language and contractions, like a supportive friend. You may use one light conversational phrase, but never joke about pain or sound dismissive.",
+  empathetic: "Lead with a gentle reflection of the user's feeling and validate it before offering any idea. Use calm, patient language. Do not rush to positivity or advice.",
+  upbeat: "Use bright, hopeful energy and one encouraging next step. Acknowledge hard feelings first; never use forced cheer or minimize sadness.",
 };
 
 function isHighRiskMessage(message) {

@@ -87,3 +87,15 @@ body.gallery-open { overflow: hidden; }
   .collection-group-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
   .collection-note { width: auto; height: auto; }
 }
+
+/* Make each speaking style easy to tell apart. */
+.voice-style-option:hover, .voice-style-option:focus-visible { background: #eef6fd; border-color: #bfd6e8; outline: none; }
+.voice-style-option[aria-checked="true"] { outline: 2px solid #bfd6e8; outline-offset: -2px; }
+.voice-style-option[data-style="friendly"][aria-checked="true"] { background: #f0edff; border-color: #d2c9ff; }
+.voice-style-option[data-style="casual"][aria-checked="true"] { background: #fff2ee; border-color: #ffd0c4; }
+.voice-style-option[data-style="empathetic"][aria-checked="true"] { background: #eaf4fd; border-color: #bfd6e8; }
+.voice-style-option[data-style="upbeat"][aria-checked="true"] { background: #eaf8f0; border-color: #c2e8d1; }
+.voice-style-option[data-style="casual"] .style-ascii { color: var(--coral); }
+.voice-style-option[data-style="empathetic"] .style-ascii { color: #4d7398; }
+.voice-style-option[data-style="upbeat"] .style-ascii { color: #4a9676; }
+.chat-heading p span { color: var(--purple); font-weight: 700; }

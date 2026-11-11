@@ -24,6 +24,7 @@ const galleryBackdrop = document.querySelector("#galleryBackdrop");
 const voiceStyleButton = document.querySelector("#voiceStyleButton");
 const voiceStyleMenu = document.querySelector("#voiceStyleMenu");
 const voiceStyleOptions = document.querySelectorAll(".voice-style-option");
+const voiceStyleCurrent = document.querySelector("#voiceStyleCurrent");
 
 let lastStepId = null;
 let quoteOpenTimer;
@@ -38,6 +39,7 @@ function closeVoiceStyleMenu() {
 function renderVoiceStyle(style = DearBubblStorage.getVoiceStyle()) {
   const safeStyle = voiceStyleLabels[style] ? style : "friendly";
   DearBubblStorage.setVoiceStyle(safeStyle);
+  voiceStyleCurrent.textContent = voiceStyleLabels[safeStyle];
   voiceStyleOptions.forEach((option) => {
     option.setAttribute("aria-checked", String(option.dataset.style === safeStyle));
   });
