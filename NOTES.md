@@ -22,6 +22,7 @@ The OpenAI key is read only from `.env`. The model is `gpt-5.6-luna`. If the AI 
 - Version 1 focuses on one complete session: pick a doorway, write what feels okay, send once, receive Bubbl’s supportive reply, and get one optional small step toward talking with another person.
 - Safety reminders are visible before and during chat. The app blocks common private details, has a high-risk support message with 911/988, never pressures the student to keep sharing, and disables Send while it shows “Thinking…”.
 - The Daily Social Goal tracker shows three checklist tasks for today and gives a thumbs-up when each one is completed.
+- Clicking Bubbl's `b` icon opens a speaking-style chooser with Friendly, Casual/Chatty, Empathetic, and Upbeat options. The choice saves in the browser and is applied to the next AI message.
 - The header and hero now use the supplied DearBubbl logo, and the promotion line says “Always a place to land.”
 - The page now uses a pale blue and white cloud background, dark navy text, and varied pastel button colors.
 - The large hero logo now sits on a white circle so it stays clear over the cloud background.

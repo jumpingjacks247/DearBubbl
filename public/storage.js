@@ -118,6 +118,7 @@ const rarityTiers = [
 
 const sampleState = {
   version: 1,
+  voiceStyle: "friendly",
   conversations: [],
   completedSteps: [],
   dailyGoals: { date: "", completed: [] },
@@ -150,6 +151,17 @@ function todayKey() {
 
 function saveState(state) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function getVoiceStyle() {
+  const style = readState().voiceStyle;
+  return typeof style === "string" ? style : "friendly";
+}
+
+function setVoiceStyle(style) {
+  const state = readState();
+  state.voiceStyle = style;
+  saveState(state);
 }
 
 function addConversation(conversation) {
@@ -204,4 +216,4 @@ function getQuoteCollection() {
   return collected.map(quoteWithRarity);
 }
 
-window.DearBubblStorage = { readState, addConversation, completeStep, getDailyGoals, toggleDailyGoal, drawBlindBoxQuote, getQuoteCollection };
+window.DearBubblStorage = { readState, addConversation, completeStep, getDailyGoals, toggleDailyGoal, drawBlindBoxQuote, getQuoteCollection, getVoiceStyle, setVoiceStyle };

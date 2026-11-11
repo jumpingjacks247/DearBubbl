@@ -21,10 +21,27 @@ const galleryOpenButton = document.querySelector("#galleryOpenButton");
 const galleryModal = document.querySelector("#galleryModal");
 const galleryClose = document.querySelector("#galleryClose");
 const galleryBackdrop = document.querySelector("#galleryBackdrop");
+const voiceStyleButton = document.querySelector("#voiceStyleButton");
+const voiceStyleMenu = document.querySelector("#voiceStyleMenu");
+const voiceStyleOptions = document.querySelectorAll(".voice-style-option");
 
 let lastStepId = null;
 let quoteOpenTimer;
 let quoteHideTimer;
+const voiceStyleLabels = { friendly: "Friendly", casual: "Casual/Chatty", empathetic: "Empathetic", upbeat: "Upbeat" };
+
+function closeVoiceStyleMenu() {
+  voiceStyleMenu.hidden = true;
+  voiceStyleButton.setAttribute("aria-expanded", "false");
+}
+
+function renderVoiceStyle(style = DearBubblStorage.getVoiceStyle()) {
+  const safeStyle = voiceStyleLabels[style] ? style : "friendly";
+  DearBubblStorage.setVoiceStyle(safeStyle);
+  voiceStyleOptions.forEach((option) => {
+    option.setAttribute("aria-checked", String(option.dataset.style === safeStyle));
+  });
+}
 
 function closeQuoteNote() {
   clearTimeout(quoteOpenTimer);
@@ -157,8 +174,29 @@ document.querySelectorAll(".starter-card").forEach((button) => {
   });
 });
 
+voiceStyleButton.addEventListener("click", () => {
+  const willOpen = voiceStyleMenu.hidden;
+  voiceStyleMenu.hidden = !willOpen;
+  voiceStyleButton.setAttribute("aria-expanded", String(willOpen));
+  if (willOpen) voiceStyleMenu.querySelector('[aria-checked="true"]')?.focus();
+});
+
+voiceStyleOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    DearBubblStorage.setVoiceStyle(option.dataset.style);
+    renderVoiceStyle(option.dataset.style);
+    closeVoiceStyleMenu();
+    voiceStyleButton.focus();
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!voiceStyleMenu.hidden && !event.target.closest(".voice-style-wrap")) closeVoiceStyleMenu();
+});
+
 renderDailyGoals();
 renderQuoteCollection();
+renderVoiceStyle();
 quoteNoteClose.addEventListener("click", closeQuoteNote);
 galleryOpenButton.addEventListener("click", openGallery);
 galleryClose.addEventListener("click", closeGallery);
@@ -166,6 +204,7 @@ galleryBackdrop.addEventListener("click", closeGallery);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !galleryModal.hidden) closeGallery();
+  if (event.key === "Escape" && !voiceStyleMenu.hidden) closeVoiceStyleMenu();
 });
 
 messageInput.addEventListener("input", () => {
@@ -196,7 +235,7 @@ chatForm.addEventListener("submit", async (event) => {
     const result = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, style: DearBubblStorage.getVoiceStyle() }),
     });
     const data = await result.json();
     removeThinking();
