@@ -1,54 +1,51 @@
-# DearBubbl notes
+# Quibly notes
 
 ## How to run it
 
-1. In the project folder, run `npm install` once.
-2. Start the app with `npm start`.
-3. Open `http://127.0.0.1:3000` in a browser.
+In the project folder, run:
 
-Keep the `npm start` server running while using the app; if the page ever says it cannot connect, run that command again.
+    npm start
 
-The OpenAI key is read only from `.env`. The model is `gpt-5.6-luna`. If the AI cannot answer, the app tells you to check `.env` and the internet connection. The key is never sent to the page.
+Then open http://127.0.0.1:3000 in a browser.
 
-## Vercel setup
+The OpenAI key is read only from .env, never sent to the page, and never printed. The model used is gpt-5.6-luna. If the AI cannot answer because the key expired or the internet is unavailable, Quibly shows a friendly message telling you to check .env and the internet connection.
 
-- Vercel can detect this Express app automatically from `server.js`; the files in `public/` are the page and assets. No build command or database is needed for Version 1.
-- In the Vercel project’s Environment Variables settings, add the secret value under the name `OPENAI_API_KEY` for Production. Add it to Preview too if you want preview links to answer. Redeploy after adding or changing it.
-- The long `sk-...` text supplied for deployment is the secret value, not a valid Vercel variable name. Vercel variable names can use letters, numbers, and underscores, so the code uses `OPENAI_API_KEY` and never contains the secret.
-- Keep `.env` and `.env*` ignored. Browser saving still works locally and online; there is no database yet.
+## What is done
 
-## GitHub Pages setup
+Quibly Version 1 follows the MVP order from BRIEF.md:
 
-- A GitHub Actions workflow publishes the static files in `public/` to GitHub Pages after a push to `main`.
-- In the repository's Settings → Pages, choose GitHub Actions if GitHub asks for a publishing source.
-- GitHub Pages cannot run the private AI server. Before publishing, put the existing Vercel server URL in `public/site-config.js` as `window.DEARBUBBL_API_BASE`, without a trailing slash. Do not put an API key there.
-- The Vercel server allows the DearBubbl GitHub Pages origin to call `/api/chat`; local `npm start` still works too.
+1. Paste notes → real OpenAI AI makes a personalized quiz game. The sample button makes the flow easy to demo.
+2. Correct answers earn points, streaks, XP-style rewards, and update the small progress strip.
+3. Quick quiz, Matching, and Speed round modes are selectable before generating; each mode has a different play UI.
+4. The server sends the brief as the AI's system instructions with every request. Questions are required to stay inside the notes, use safe middle-school language, and avoid personal information.
 
-## What’s done
+Saving is in public/storage.js only, using browser localStorage. It saves points, games played, best streak, and the last few session summaries.
 
-- Version 1 focuses on one complete session: pick a doorway, write what feels okay, send once, receive Bubbl’s supportive reply, and get one optional small step toward talking with another person.
-- Safety reminders are visible before and during chat. The app blocks common private details, has a high-risk support message with 911/988, never pressures the student to keep sharing, and disables Send while it shows “Thinking…”.
-- The Daily Social Goal tracker shows three checklist tasks for today and gives a thumbs-up when each one is completed.
-- The comfort-zone challenge card now gives exactly one small challenge per local day, keeps that same challenge until midnight, and shows it on page load and after chat.
-- If no Daily Social Goal is finished, DearBubbl shows a small, closable reminder every time the app opens and about once per local clock hour while it stays open. It stops for the day after one goal is checked.
-- Clicking Bubbl's `b` icon opens a speaking-style chooser with clearly different Friendly, Casual/Chatty, Empathetic, and Upbeat tones. Each has a small ASCII face, a different description/color, and the choice saves in the browser and is applied to the next AI message.
-- The chat now has a “Practice an opinion” doorway. It sends a safe opinion-practice mode to Bubbl, which gives kind, specific feedback on how the opinion was expressed.
-- Bubbl refuses clearly off-topic questions with a gentle scope reminder and refuses requests to override, reveal, or bypass its rules before sending anything to the AI.
-- The header and hero now use the supplied DearBubbl logo, and the promotion line says “Always a place to land.”
-- The page now uses a pale blue and white cloud background, dark navy text, and varied pastel button colors.
-- The large hero logo now sits on a white circle so it stays clear over the cloud background.
-- Completing a daily goal now opens a small square blind-box sticky note with a paper-plane trail and light animation: 25 Common yellow notes, 25 Rare purple notes, 25 Super Rare pink notes, and 25 Legendary blue notes. Found notes stay in the browser collection without repeats. The quote text uses a handwriting style, and the top Gallery button opens the organized collection in its own popup.
-- Conversation entries and sample next steps save in the browser through `public/storage.js` so the future database change has one small home.
-- Saves on this computer only for now.
-- After each save point, push it to GitHub.
-- Verified locally: the starter flow reaches a real OpenAI reply, shows `Thinking…` while waiting, saves the optional step, and warns before a sample address is sent.
+Saves on this computer only for now.
 
-## What’s next
+## MVP feature checks
 
-### Maybe Later
+| MVP feature | Works? | How to check |
+| --- | --- | --- |
+| Paste notes and get an AI-made quiz game | Yes | Click “Try a sample,” click “Make my game,” wait for “Thinking…” to finish, and confirm the game appears. |
+| Earn points and rewards | Yes | Answer a question correctly, confirm points/streak update, finish the game, and confirm the results card shows XP. |
+| Choose matching or speed rounds | Yes | Select “Matching” or “Speed round” before making a game; confirm the matching cards or 15-second timer appears. |
+| AI gives correct, safe answers | Yes | Use the sample notes, verify every answer appears in those notes, and try adding an email/phone number to see the privacy block. |
 
-- Add a student-friendly written-entry export for the competition PDF.
-- Add a short video demo mode with captions and a privacy-safe presentation script.
-- Add trusted-adult support and region-aware crisis resources.
-- Add a real database and user accounts only after the safety/privacy design is reviewed.
-- Add more carefully tested conversation starters, accessibility review, and moderated peer practice.
+## Maybe Later
+
+- The user can report a wrong question so it is removed.
+- The user can see which part of their notes each question came from.
+- The user can replay questions they got wrong.
+- The user can see a break reminder after playing for a while.
+- The user can race a timer to beat their best score.
+- The user can save a game set in the browser to play later.
+- The user can see a progress bar of topics mastered.
+- The user can ask the AI to explain a missed answer.
+
+## Next
+
+- Test with several real, teacher-reviewed note sets.
+- Add the reporting and explanation features after the MVP is demonstrated.
+- Review privacy and child-safety choices before adding accounts or a database.
+- Add a short video-demo mode and a written-entry export for the competition.

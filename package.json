@@ -1,8 +1,8 @@
 {
-  "name": "dearbubbl",
+  "name": "quibly",
   "version": "1.0.0",
   "private": true,
-  "description": "DearBubbl — one small, safe step toward expressing feelings.",
+  "description": "Quibly — turn study notes into a playful mini-game.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -2,87 +2,31 @@ require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
-const { getBubblReply, isHighRiskMessage, getGuardReply } = require("./ai.js");
+const { makeStudyGame } = require("./ai.js");
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
-const allowedVoiceStyles = new Set(["friendly", "casual", "empathetic", "upbeat"]);
-const allowedChatModes = new Set(["general", "opinion"]);
-const allowedCorsOrigins = new Set([
-  "https://jumpingjacks247.github.io",
-  "http://127.0.0.1:3000",
-  "http://localhost:3000",
-]);
 
-app.use(express.json({ limit: "32kb" }));
-app.use((request, response, next) => {
-  const origin = request.headers.origin;
-  if (origin && allowedCorsOrigins.has(origin)) {
-    response.setHeader("Access-Control-Allow-Origin", origin);
-    response.setHeader("Vary", "Origin");
-    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  }
-  if (request.method === "OPTIONS") {
-    response.sendStatus(204);
-    return;
-  }
-  next();
-});
+app.use(express.json({ limit: "24kb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/api/health", (_request, response) => {
-  response.json({ ok: true, aiReady: Boolean(process.env.OPENAI_API_KEY) });
-});
+app.get("/api/health", (_request, response) => response.json({ ok: true, aiReady: Boolean(process.env.OPENAI_API_KEY) }));
 
-app.post("/api/chat", async (request, response) => {
-  const message = typeof request.body?.message === "string" ? request.body.message.trim() : "";
-  const style = allowedVoiceStyles.has(request.body?.style) ? request.body.style : "friendly";
-  const mode = allowedChatModes.has(request.body?.mode) ? request.body.mode : "general";
-
-  if (!message) {
-    response.status(400).json({ error: "Please write a message first." });
-    return;
-  }
-
-  if (message.length > 1200) {
-    response.status(400).json({ error: "Let's keep this first chat short and comfortable." });
-    return;
-  }
-
-  const guardReply = getGuardReply(message);
-  if (guardReply) {
-    response.json({ guarded: true, reply: guardReply });
-    return;
-  }
-
-  if (isHighRiskMessage(message)) {
-    response.json({
-      safety: true,
-      reply: "I'm really glad you told me. You deserve support from a trusted adult right now. If you may be in immediate danger, call 911; in the U.S., call or text 988 for the Suicide & Crisis Lifeline.",
-    });
-    return;
-  }
-
+app.post("/api/generate-quiz", async (request, response) => {
+  const notes = typeof request.body?.notes === "string" ? request.body.notes.trim() : "";
+  const gameType = ["quiz", "matching", "speed"].includes(request.body?.gameType) ? request.body.gameType : "quiz";
+  if (notes.length < 40) return response.status(400).json({ error: "Please add a few more notes so Quibly can make accurate questions." });
+  if (notes.length > 12000) return response.status(400).json({ error: "That is a lot of text. Please keep your notes under 12,000 characters." });
   try {
-    const reply = await getBubblReply(message, style, mode);
-    response.json({ reply });
+    const game = await makeStudyGame(notes, gameType);
+    response.json(game);
   } catch (error) {
-    console.error("DearBubbl AI request failed:", error?.message || "unknown error");
-    response.status(503).json({
-      error: "I couldn't reach Bubbl right now. Please check the OpenAI key in .env and your internet connection, then try again.",
-    });
+    console.error("Quibly AI request failed:", error?.message || "unknown error");
+    response.status(503).json({ error: "Quibly couldn't make a game right now. Please check the OpenAI key in .env and your internet connection, then try again." });
   }
 });
 
-app.get("*", (_request, response) => {
-  response.sendFile(path.join(__dirname, "public", "index.html"));
-});
+app.get("*", (_request, response) => response.sendFile(path.join(__dirname, "public", "index.html")));
 
-if (require.main === module) {
-  app.listen(port, "127.0.0.1", () => {
-    console.log(`DearBubbl is running at http://127.0.0.1:${port}`);
-  });
-}
-
+if (require.main === module) app.listen(port, "127.0.0.1", () => console.log("Quibly is running at http://127.0.0.1:" + port));
 module.exports = app;

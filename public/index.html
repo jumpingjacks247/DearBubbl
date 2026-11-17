@@ -3,157 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DearBubbl — a little room to be heard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <title>Quibly — turn notes into play</title>
+    <meta name="description" content="Quibly turns your own study notes into a safe, playful mini-game." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app-shell">
+    <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="./" aria-label="DearBubbl home">
-          <img class="brand-logo" src="assets/dearbubbl-logo.png" alt="DearBubbl logo" />
-          <span>Dear<span class="brand-accent">Bubbl</span></span>
-        </a>
-        <div class="topbar-actions">
-          <button class="gallery-link" id="galleryOpenButton" type="button">Gallery <span id="topCollectionCount">0 / 100</span></button>
-          <div class="topbar-note"><span class="status-dot"></span> a private-feeling practice space</div>
-        </div>
+        <a class="brand" href="/" aria-label="Quibly home"><span class="brand-mark">Q</span><span>quibly<span class="brand-dot">.</span></span></a>
+        <div class="header-meta"><a class="arcade-link" href="/arcade.html">Play the arcade →</a><span class="server-status"><span class="status-dot"></span> AI study lab</span><span class="save-chip">Saved in this browser</span></div>
       </header>
 
-      <section class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">one gentle step at a time</p>
-          <h1>A little room<br />to be <em>heard.</em></h1>
-          <p class="hero-text">Always a place to land.</p>
-          <div class="difference-pill"><span>✦</span><strong>Different by design</strong><span>no pressure · no judgment · no oversharing</span></div>
-        </div>
-        <div class="hero-logo-wrap" aria-hidden="true">
-          <img class="hero-logo" src="assets/dearbubbl-logo.png" alt="" />
-        </div>
-      </section>
-
-      <section class="safety-strip" aria-label="Safety reminder">
-        <span class="safety-icon">♡</span>
-        <div><strong>Your comfort comes first.</strong> Please skip names, addresses, school names, passwords, and other private details. You can leave anytime.</div>
-        <span class="local-note">Saves on this computer only for now</span>
-      </section>
-
-      <section class="daily-goals-card" aria-labelledby="dailyGoalsTitle">
-        <div class="daily-goals-heading">
-          <div>
-            <p class="eyebrow">three gentle choices for today</p>
-            <h2 id="dailyGoalsTitle">Daily Social Goal</h2>
-            <p>Try only what feels safe. Every small step counts.</p>
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">your notes, but playable</p>
+            <h1>Study less like a worksheet.<br /><span>Play your way in.</span></h1>
+            <p class="hero-lede">Paste your notes and Quibly turns them into a personalized mini-game with points, streaks, and tiny wins.</p>
+            <div class="difference-row"><span class="spark">✦</span><strong>Made from your notes</strong><span>not a random question bank</span></div>
           </div>
-          <span class="goal-count" id="goalCount">0 / 3 done</span>
-        </div>
-        <div class="daily-goal-list" id="dailyGoalList"></div>
-      </section>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="floating-card card-yellow">+ 40 XP</div>
+            <div class="floating-card card-pink">streak ×3</div>
+            <div class="planet"><span>Q</span></div>
+            <div class="mini-star star-one">✦</div><div class="mini-star star-two">✧</div><div class="mini-star star-three">✦</div>
+          </div>
+        </section>
 
-      <section class="chat-card" aria-label="DearBubbl chat">
-        <div class="chat-heading">
-          <div class="voice-style-wrap">
-            <button class="bubbl-avatar bubbl-avatar-button" id="voiceStyleButton" type="button" aria-label="Choose how Bubbl speaks" aria-expanded="false">b<span>·</span></button>
-            <div class="voice-style-menu" id="voiceStyleMenu" hidden>
-              <p class="voice-style-title">How should Bubbl sound?</p>
-              <div class="voice-style-options" role="radiogroup" aria-label="Bubbl speaking style">
-                <button class="voice-style-option" type="button" data-style="friendly" role="radio" aria-checked="true">
-                  <span class="style-ascii" aria-hidden="true">(^-^)</span><span><strong>Friendly</strong><small>warm and steady</small></span>
-                </button>
-                <button class="voice-style-option" type="button" data-style="casual" role="radio" aria-checked="false">
-                  <span class="style-ascii" aria-hidden="true">~^.^~</span><span><strong>Casual/Chatty</strong><small>relaxed, like a chat</small></span>
-                </button>
-                <button class="voice-style-option" type="button" data-style="empathetic" role="radio" aria-checked="false">
-                  <span class="style-ascii" aria-hidden="true">(._.;)</span><span><strong>Empathetic</strong><small>feeling-first and gentle</small></span>
-                </button>
-                <button class="voice-style-option" type="button" data-style="upbeat" role="radio" aria-checked="false">
-                  <span class="style-ascii" aria-hidden="true">\(^o^)/</span><span><strong>Upbeat</strong><small>hopeful and energizing</small></span>
-                </button>
+        <section class="stats-strip" aria-label="Your progress">
+          <div><span class="stat-label">total points</span><strong id="totalPoints">0</strong></div>
+          <div><span class="stat-label">games played</span><strong id="gamesPlayed">0</strong></div>
+          <div><span class="stat-label">best streak</span><strong id="bestStreak">0 <small>in a row</small></strong></div>
+          <div class="stats-note"><span class="shield">✓</span> Quibly only uses the notes you share.</div>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="builder-card panel-card" id="builderCard">
+            <div class="section-heading"><div><p class="eyebrow">step 01 · make your game</p><h2>Drop in your study notes</h2></div><span class="step-badge">1</span></div>
+            <label class="field-label" for="notesInput">What are you learning today?</label>
+            <textarea id="notesInput" rows="11" maxlength="12000" placeholder="Paste a lesson, review sheet, or your own notes here…"></textarea>
+            <div class="input-footer"><span id="notesCount">0 / 12,000</span><span id="privacyHint">No names or private details needed.</span></div>
+            <button class="sample-link" id="sampleButton" type="button">Try a sample: planets &amp; space <span>↗</span></button>
+
+            <div class="game-options">
+              <div class="option-heading"><div><p class="eyebrow">step 02 · pick your vibe</p><h3>Choose a game type</h3></div><span id="selectedGameLabel">Quick quiz</span></div>
+              <div class="mode-grid" role="radiogroup" aria-label="Game type">
+                <button class="mode-card selected" type="button" data-mode="quiz" role="radio" aria-checked="true"><span class="mode-icon icon-blue">?</span><span><strong>Quick quiz</strong><small>Pick the right answer</small></span><span class="mode-check">✓</span></button>
+                <button class="mode-card" type="button" data-mode="matching" role="radio" aria-checked="false"><span class="mode-icon icon-yellow">↔</span><span><strong>Matching</strong><small>Pair terms and meanings</small></span><span class="mode-check">✓</span></button>
+                <button class="mode-card" type="button" data-mode="speed" role="radio" aria-checked="false"><span class="mode-icon icon-pink">⚡</span><span><strong>Speed round</strong><small>Beat the clock</small></span><span class="mode-check">✓</span></button>
               </div>
             </div>
+            <div class="generate-row"><button class="primary-button" id="generateButton" type="button"><span>Make my game</span><span class="button-arrow">→</span></button><span class="safe-note"><span>✦</span> Quibly checks answers against your notes.</span></div>
+            <div class="error-box" id="errorBox" role="alert" hidden></div>
           </div>
-          <div><h2>Bubbl</h2><p>your tiny cheerleader · <span id="voiceStyleCurrent">Friendly</span></p></div>
-          <span class="online-badge">here with you</span>
-        </div>
 
-        <div class="chat-log" id="chatLog" aria-live="polite">
-          <div class="message-row bubbl-row">
-            <div class="message-avatar">b</div>
-            <div class="message-bubble bubbl-bubble"><p>Hello! I'm Bubbl, here to help you and those around you with expressing feelings and social anxiety. What are we talking about today? :)</p><span class="message-time">just now</span></div>
-          </div>
-        </div>
+          <aside class="side-column">
+            <div class="difference-card panel-card"><div class="sticker">WHY QUIBLY?</div><h2>Personalized beats generic.</h2><p>Quizlet and Blooket are great for ready-made sets. Quibly starts with <em>your</em> notes and turns them into a little challenge made for you.</p><div class="compare"><div><span class="compare-dot dot-gray"></span>Flashcards</div><span>read → repeat</span></div><div class="compare compare-active"><div><span class="compare-dot dot-pink"></span>Quibly</div><span>play → remember</span></div></div>
+            <div class="safety-card panel-card"><div class="safety-icon">♡</div><div><h3>Study safe</h3><p>Your notes stay in your browser. Quibly does not need your name, email, or account.</p></div></div>
+            <div class="tip-card"><span class="tip-icon">✦</span><div><strong>Small tip</strong><p>Short notes with clear facts make the best games.</p></div></div>
+          </aside>
+        </section>
 
-        <div class="starter-area" id="starterArea">
-          <p class="starter-label">Pick a doorway, or write your own:</p>
-          <div class="starter-grid">
-            <button class="starter-card" data-starter="My day was..."><span class="starter-emoji peach">☀</span><span><strong>Talk about your day?</strong><small>the good, the weird, or the blah</small></span><span class="arrow">↗</span></button>
-            <button class="starter-card" data-starter="At home, I..."><span class="starter-emoji lavender">⌂</span><span><strong>What happened at home?</strong><small>only what you feel okay sharing</small></span><span class="arrow">↗</span></button>
-            <button class="starter-card" data-starter="Right now, I feel..."><span class="starter-emoji mint">☁</span><span><strong>Everything okay? :(</strong><small>you can start with one word</small></span><span class="arrow">↗</span></button>
-            <button class="starter-card" data-starter="I think " data-mode="opinion"><span class="starter-emoji opinion-blue">✦</span><span><strong>Practice an opinion</strong><small>say what you think, your way</small></span><span class="arrow">↗</span></button>
-          </div>
-        </div>
+        <section class="game-card panel-card" id="gameCard" hidden>
+          <div class="game-topline"><div><p class="eyebrow">step 03 · play to learn</p><h2 id="gameTitle">Your game is ready</h2><p id="gameSubtitle">Made from your notes · 5 questions</p></div><div class="game-score"><span>points</span><strong id="gamePoints">0</strong></div></div>
+          <div class="progress-row"><div class="progress-track"><span id="progressBar"></span></div><span id="progressText">1 / 5</span><span class="streak-pill" id="streakPill">🔥 streak 0</span></div>
+          <div id="gameStage"></div>
+          <div class="game-footer"><button class="text-button" id="newGameButton" type="button">← Make a new game</button><span id="gameSafetyNote">Questions are based on your notes.</span></div>
+        </section>
 
-        <form class="composer" id="chatForm">
-          <label class="sr-only" for="messageInput">Your message</label>
-          <textarea id="messageInput" rows="2" maxlength="1200" placeholder="Write only what feels okay to share..."></textarea>
-          <div class="composer-footer"><span id="privacyHint">No private details, please ♡</span><button class="send-button" id="sendButton" type="submit"><span>Send to Bubbl</span><span class="send-arrow">→</span></button></div>
-        </form>
-      </section>
-
-      <section class="next-step-card" id="nextStepCard" hidden>
-        <div class="step-icon">✦</div>
-        <div class="step-copy"><p class="eyebrow">your one tiny next step</p><h2>Want to stretch your comfort zone — just a little?</h2><p id="stepText"></p></div>
-        <button id="completeStepButton" class="soft-button" type="button">I’ll try this <span>→</span></button>
-      </section>
-
-      <section class="help-card" id="helpCard" hidden>
-        <div class="help-icon">♡</div><div><strong>You deserve real support, too.</strong><p>If you may be in immediate danger, call 911. In the U.S., call or text <strong>988</strong> for the Suicide & Crisis Lifeline.</p></div>
-      </section>
-
-      <aside class="social-reminder" id="socialReminder" hidden role="status" aria-live="polite">
-        <button class="social-reminder-close" id="socialReminderClose" type="button" aria-label="Close social goal reminder">×</button>
-        <p class="social-reminder-kicker">tiny nudge</p>
-        <h2><span id="socialReminderHours">1</span> <span id="socialReminderHourWord">hour</span> before Social Goal tracker resets!</h2>
-        <p>One small, safe step is enough. You can choose what feels comfortable.</p>
-        <button class="social-reminder-action" id="socialReminderAction" type="button">Pick a tiny goal</button>
-      </aside>
-
-      <footer><span>DearBubbl · Version 1</span><span>made for kindness, safety, and small brave steps</span></footer>
-    </main>
-    <div class="gallery-modal" id="galleryModal" hidden>
-      <div class="gallery-backdrop" id="galleryBackdrop"></div>
-      <section class="quote-collection-card gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="quoteCollectionTitle">
-        <button class="gallery-close" id="galleryClose" type="button" aria-label="Close gallery">×</button>
-        <div class="quote-collection-heading">
-          <div>
-            <p class="eyebrow">your blind-box collection</p>
-            <h2 id="quoteCollectionTitle">Sticky Notes</h2>
-            <p>Each completed goal reveals one random note. No repeats until you find them all.</p>
-          </div>
-          <span class="collection-count" id="collectionCount">0 / 100 found</span>
-        </div>
-        <div class="quote-collection-list" id="quoteCollectionList">
-          <p class="collection-empty">Complete a Daily Social Goal to open your first note.</p>
-        </div>
-      </section>
+        <section class="results-card panel-card" id="resultsCard" hidden>
+          <div class="results-confetti" aria-hidden="true">✦　✧　✦</div><p class="eyebrow">game complete</p><h2 id="resultsTitle">Nice work!</h2><p id="resultsSummary"></p><div class="reward-row"><div class="reward-box"><span>score</span><strong id="resultsScore">0</strong></div><div class="reward-box"><span>best streak</span><strong id="resultsStreak">0</strong></div><div class="reward-box reward-highlight"><span>reward</span><strong id="resultsReward">+0 XP</strong></div></div><div class="results-actions"><button class="primary-button" id="playAgainButton" type="button">Play again <span>↗</span></button><button class="secondary-button" id="backToBuilderButton" type="button">Make another game</button></div></section>
+      </main>
+      <footer><span>Quibly · Version 1</span><span>made for curious minds ✦</span><span>Saves on this computer only for now.</span></footer>
     </div>
-    <div class="quote-flight" id="quoteFlight" hidden aria-live="polite">
-      <div class="flight-dots" aria-hidden="true"></div>
-      <svg class="paper-plane" viewBox="0 0 90 60" aria-hidden="true">
-        <path d="M5 7 84 30 5 53l20-23Z" fill="#fff" stroke="#5d83aa" stroke-width="2" stroke-linejoin="round" />
-        <path d="m25 30 59 0-43 9Z" fill="#dbeeff" stroke="#5d83aa" stroke-width="2" stroke-linejoin="round" />
-      </svg>
-      <div class="quote-light" aria-hidden="true"></div>
-      <aside class="quote-note" id="quoteNote">
-        <span class="quote-note-label" id="quoteNoteLabel">A little note for you</span>
-        <p id="quoteText"></p>
-        <button class="quote-note-close" id="quoteNoteClose" type="button" aria-label="Close sticky note">×</button>
-      </aside>
-    </div>
-    <script src="site-config.js"></script>
-    <script src="storage.js"></script>
-    <script src="app.js"></script>
+    <script src="storage.js"></script><script src="app.js"></script>
   </body>
 </html>
